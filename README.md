@@ -7,19 +7,34 @@ IpHub is a **reference-only registry** — it stores metadata about skills, not 
 ## Top Skills
 
 <!-- TOP_SKILLS_START -->
-*No data yet. Rankings will appear after the first stats collection.*
+## Top 10 Skills
+
+*Updated: 2026-03-14T04:24:55Z*
+
+| # | Name | Type | Installs | Users |
+|---|------|------|----------|-------|
 <!-- TOP_SKILLS_END -->
 
 ## Top Packages
 
 <!-- TOP_PACKAGES_START -->
-*No data yet.*
+## Top 10 Packages
+
+*Updated: 2026-03-14T04:24:55Z*
+
+| # | Name | Type | Installs | Users |
+|---|------|------|----------|-------|
 <!-- TOP_PACKAGES_END -->
 
 ## Top 50
 
 <!-- TOP_ALL_START -->
-*No data yet.*
+## Top 50
+
+*Updated: 2026-03-14T04:24:55Z*
+
+| # | Name | Type | Installs | Users |
+|---|------|------|----------|-------|
 <!-- TOP_ALL_END -->
 
 ## How It Works

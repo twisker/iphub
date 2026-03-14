@@ -1,6 +1,10 @@
-# IpHub Index — auto-generated, do not edit manually
-# Updated by GitHub Actions (update-stats workflow)
-
+# IpHub Index — auto-generated
 skills: {}
-
-packages: {}
+packages:
+  twisker-test:
+    owner: '@twisker'
+    type: ip
+    description: this is a test package
+    latest: 1.0.0
+    versions:
+    - 1.0.0

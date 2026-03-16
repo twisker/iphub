@@ -4,7 +4,7 @@
 Usage: python scripts/generate_pages.py [--changed-only]
 
 Reads: registry/, index.yaml, templates/
-Writes: pages/
+Writes: docs/
 """
 
 import sys
@@ -16,7 +16,7 @@ from jinja2 import Environment, FileSystemLoader
 ROOT = Path(__file__).resolve().parent.parent
 REGISTRY = ROOT / "registry"
 TEMPLATES = ROOT / "templates"
-PAGES = ROOT / "pages"
+PAGES = ROOT / "docs"
 INDEX_FILE = ROOT / "index.yaml"
 LANGUAGES = ["en", "zh-cn"]
 

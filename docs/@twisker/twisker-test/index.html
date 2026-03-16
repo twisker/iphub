@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>twisker-test — IpHub</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      line-height: 1.6; color: #24292f; background: #fff; max-width: 800px; margin: 0 auto; padding: 0 1rem 3rem;
+    }
+    .lang-bar {
+      background: #f6f8fa; border-bottom: 1px solid #d0d7de; padding: 0.4rem 1rem;
+      margin: 0 -1rem 1.5rem; font-size: 0.85rem; text-align: right;
+    }
+    .lang-bar a { color: #0969da; text-decoration: none; margin-left: 0.8rem; }
+    .lang-bar a:hover { text-decoration: underline; }
+    .lang-bar .active { font-weight: 600; color: #24292f; text-decoration: none; cursor: default; }
+    h1 { font-size: 2rem; margin: 1rem 0 0.5rem; }
+    h2 { font-size: 1.4rem; margin: 2rem 0 0.8rem; border-bottom: 1px solid #d0d7de; padding-bottom: 0.3rem; }
+    h3 { font-size: 1.1rem; margin: 1.2rem 0 0.5rem; }
+    blockquote {
+      background: #ddf4ff; border-left: 4px solid #54aeff; padding: 0.8rem 1rem; margin: 1rem 0; border-radius: 4px;
+    }
+    blockquote p { margin: 0.2rem 0; }
+    blockquote a { color: #0969da; }
+    pre {
+      background: #f6f8fa; border: 1px solid #d0d7de; border-radius: 6px;
+      padding: 1rem; overflow-x: auto; position: relative; margin: 0.8rem 0;
+    }
+    code { font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace; font-size: 0.9em; }
+    pre code { font-size: 0.85em; }
+    .copy-btn {
+      position: absolute; top: 0.4rem; right: 0.4rem; background: #fff; border: 1px solid #d0d7de;
+      border-radius: 4px; padding: 0.2rem 0.5rem; cursor: pointer; font-size: 0.75rem; color: #57606a;
+    }
+    .copy-btn:hover { background: #f3f4f6; }
+    table { width: 100%; border-collapse: collapse; margin: 0.8rem 0; }
+    th, td { text-align: left; padding: 0.5rem 0.8rem; border: 1px solid #d0d7de; }
+    th { background: #f6f8fa; font-weight: 600; }
+    .tag {
+      display: inline-block; background: #ddf4ff; color: #0550ae; padding: 0.15rem 0.5rem;
+      border-radius: 12px; font-size: 0.8rem; margin: 0.2rem 0.3rem 0.2rem 0;
+    }
+    .desc { color: #57606a; font-size: 1.05rem; margin-bottom: 1rem; }
+    hr { border: none; border-top: 1px solid #d0d7de; margin: 2rem 0; }
+    .footer { color: #8b949e; font-size: 0.85rem; font-style: italic; }
+    ul { padding-left: 1.5rem; }
+    li { margin: 0.3rem 0; }
+    a { color: #0969da; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+
+<div class="lang-bar">
+  
+  <a href="zh-cn/">zh-cn</a>
+  
+  <span class="active">en</span>
+</div>
+
+<h1>twisker-test</h1>
+<p class="desc">this is a test package</p>
+
+
+
+<h2>Quick Start</h2>
+
+<h3>First time? 3 steps to go</h3>
+
+<p><strong>1. Install Agent</strong> (pick one)</p>
+<pre><code># Claude Code
+npm install -g @anthropic-ai/claude-code
+
+# OpenClaw
+npm install -g openclaw</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+
+<p><strong>2. Install IpMan</strong></p>
+<pre><code>pip install ipman-cli
+# Or one-line install
+curl -fsSL https://raw.githubusercontent.com/twisker/ipman/main/scripts/install.sh | bash</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+
+<p><strong>3. Install this skill kit</strong></p>
+<pre><code>ipman install twisker-test</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+
+<blockquote>
+  <p>💡 <strong>What is IpMan? Agent skill virtual environment manager, like conda.</strong></p>
+  <p>One-click install, switch, and share AI Agent skill sets.</p>
+  <p><a href="https://twisker.github.io/ipman">Learn more →</a></p>
+</blockquote>
+
+<hr>
+
+
+<h2>Skills Included (22)</h2>
+<table>
+  <thead><tr><th>Skill</th><th>Description</th><th>Installs</th></tr></thead>
+  <tbody>
+    
+    <tr><td>agent-sdk-dev@claude-plugins-official</td><td></td><td>0</td></tr>
+    
+    <tr><td>claude-code-setup@claude-plugins-official</td><td></td><td>0</td></tr>
+    
+    <tr><td>code-review@claude-plugins-official</td><td></td><td>0</td></tr>
+    
+    <tr><td>coderabbit@claude-plugins-official</td><td></td><td>0</td></tr>
+    
+    <tr><td>commit-commands@claude-plugins-official</td><td></td><td>0</td></tr>
+    
+    <tr><td>explanatory-output-style@claude-plugins-official</td><td></td><td>0</td></tr>
+    
+    <tr><td>feature-dev@claude-plugins-official</td><td></td><td>0</td></tr>
+    
+    <tr><td>figma@claude-plugins-official</td><td></td><td>0</td></tr>
+    
+    <tr><td>firecrawl@claude-plugins-official</td><td></td><td>0</td></tr>
+    
+    <tr><td>frontend-design@claude-plugins-official</td><td></td><td>0</td></tr>
+    
+    <tr><td>github@claude-plugins-official</td><td></td><td>0</td></tr>
+    
+    <tr><td>greptile@claude-plugins-official</td><td></td><td>0</td></tr>
+    
+    <tr><td>plugin-dev@claude-plugins-official</td><td></td><td>0</td></tr>
+    
+    <tr><td>postman@claude-plugins-official</td><td></td><td>0</td></tr>
+    
+    <tr><td>pr-review-toolkit@claude-plugins-official</td><td></td><td>0</td></tr>
+    
+    <tr><td>project-bootstrap@claude-project-bootstrap</td><td></td><td>0</td></tr>
+    
+    <tr><td>pyright-lsp@claude-plugins-official</td><td></td><td>0</td></tr>
+    
+    <tr><td>security-guidance@claude-plugins-official</td><td></td><td>0</td></tr>
+    
+    <tr><td>semgrep@claude-plugins-official</td><td></td><td>0</td></tr>
+    
+    <tr><td>skill-creator@claude-plugins-official</td><td></td><td>0</td></tr>
+    
+    <tr><td>superpowers@claude-plugins-official</td><td></td><td>0</td></tr>
+    
+    <tr><td>typescript-lsp@claude-plugins-official</td><td></td><td>0</td></tr>
+    
+  </tbody>
+</table>
+
+
+
+
+
+<h2>Version History</h2>
+
+<h3>v1.0.2 (2026-03-14)</h3>
+
+
+<h3>v1.0.0 (2026-03-14)</h3>
+
+
+
+
+
+
+<h2>Author</h2>
+<p><strong>@twisker</strong></p>
+
+<hr>
+<p class="footer">Auto-generated by IpHub · <code>ipman install twisker-test</code></p>
+
+<script>
+function copyCode(btn) {
+  var code = btn.parentElement.querySelector('code');
+  navigator.clipboard.writeText(code.textContent).then(function() {
+    btn.textContent = 'Copied!';
+    setTimeout(function() { btn.textContent = 'Copy'; }, 2000);
+  });
+}
+</script>
+
+</body>
+</html>

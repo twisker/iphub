@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="{{ lang }}">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{ t.iphub_title }}</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      line-height: 1.6; color: #24292f; background: #fff; max-width: 800px; margin: 0 auto; padding: 0 1rem 3rem;
+    }
+    .lang-bar {
+      background: #f6f8fa; border-bottom: 1px solid #d0d7de; padding: 0.4rem 1rem;
+      margin: 0 -1rem 1.5rem; font-size: 0.85rem; text-align: right;
+    }
+    .lang-bar a { color: #0969da; text-decoration: none; margin-left: 0.8rem; }
+    .lang-bar a:hover { text-decoration: underline; }
+    .lang-bar .active { font-weight: 600; color: #24292f; text-decoration: none; cursor: default; }
+    h1 { font-size: 2rem; margin: 1rem 0 0.5rem; }
+    h2 { font-size: 1.4rem; margin: 2rem 0 0.8rem; border-bottom: 1px solid #d0d7de; padding-bottom: 0.3rem; }
+    h3 { font-size: 1.1rem; margin: 1.2rem 0 0.5rem; }
+    blockquote {
+      background: #ddf4ff; border-left: 4px solid #54aeff; padding: 0.8rem 1rem; margin: 1rem 0; border-radius: 4px;
+    }
+    blockquote p { margin: 0.2rem 0; }
+    blockquote a { color: #0969da; }
+    pre {
+      background: #f6f8fa; border: 1px solid #d0d7de; border-radius: 6px;
+      padding: 1rem; overflow-x: auto; position: relative; margin: 0.8rem 0;
+    }
+    code { font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace; font-size: 0.9em; }
+    pre code { font-size: 0.85em; }
+    .copy-btn {
+      position: absolute; top: 0.4rem; right: 0.4rem; background: #fff; border: 1px solid #d0d7de;
+      border-radius: 4px; padding: 0.2rem 0.5rem; cursor: pointer; font-size: 0.75rem; color: #57606a;
+    }
+    .copy-btn:hover { background: #f3f4f6; }
+    table { width: 100%; border-collapse: collapse; margin: 0.8rem 0; }
+    th, td { text-align: left; padding: 0.5rem 0.8rem; border: 1px solid #d0d7de; }
+    th { background: #f6f8fa; font-weight: 600; }
+    .tag {
+      display: inline-block; background: #ddf4ff; color: #0550ae; padding: 0.15rem 0.5rem;
+      border-radius: 12px; font-size: 0.8rem; margin: 0.2rem 0.3rem 0.2rem 0;
+    }
+    .tag a { color: #0550ae; text-decoration: none; }
+    .tag a:hover { text-decoration: underline; }
+    .desc { color: #57606a; font-size: 1.05rem; margin-bottom: 1rem; }
+    .hero { text-align: center; padding: 2rem 0; }
+    .hero h1 { font-size: 2.2rem; }
+    .hero .desc { font-size: 1.1rem; }
+    hr { border: none; border-top: 1px solid #d0d7de; margin: 2rem 0; }
+    .footer { color: #8b949e; font-size: 0.85rem; font-style: italic; }
+    ul { padding-left: 1.5rem; }
+    li { margin: 0.3rem 0; }
+    a { color: #0969da; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .trending-card {
+      background: #f6f8fa; border: 1px solid #d0d7de; border-radius: 6px;
+      padding: 1rem; margin: 0.8rem 0;
+    }
+    .trending-card h3 { margin-top: 0; }
+    .placeholder {
+      background: #fff8c5; border-left: 4px solid #d4a72c; padding: 0.8rem 1rem;
+      margin: 1rem 0; border-radius: 4px; color: #57606a;
+    }
+  </style>
+</head>
+<body>
+
+<div class="lang-bar">
+  {% if lang == "en" %}
+  <a href="../zh-cn/">zh-cn</a>
+  <span class="active">en</span>
+  {% elif lang == "zh-cn" %}
+  <a href="../en/">en</a>
+  <span class="active">zh-cn</span>
+  {% endif %}
+</div>
+
+<div class="hero">
+  <h1>{{ t.iphub_title }}</h1>
+  <p class="desc">{{ t.iphub_subtitle }}</p>
+  <pre><code>pip install ipman-cli</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+</div>
+
+<hr>
+
+{# ── Trending Section ── #}
+{% if trending %}
+  {% if trending.bootstrap %}
+  <div class="placeholder">{{ t.no_trending_yet }}</div>
+  {% else %}
+
+  {# Hot Tags #}
+  {% if trending.hot_tags %}
+  <h2>{{ t.hot_tags }}</h2>
+  <p>
+    {% for ht in trending.hot_tags %}
+    <span class="tag"><a href="tags/{{ ht.tag }}/">{{ ht.tag }}</a></span>
+    {% endfor %}
+  </p>
+  {% endif %}
+
+  {# Rising This Week #}
+  {% if trending.rising %}
+  <h2>{{ t.rising_this_week }}</h2>
+  <table>
+    <thead><tr><th>{{ t.skill }}</th><th>{{ t.description }}</th><th>{{ t.weekly_installs }}</th></tr></thead>
+    <tbody>
+      {% for r in trending.rising %}
+      <tr><td>{{ r.name }}</td><td>{{ r.description | default('') }}</td><td>{{ r.weekly_installs | default(0) }}</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% endif %}
+
+  {# Just Published #}
+  {% if trending.new_releases %}
+  <h2>{{ t.just_published }}</h2>
+  <table>
+    <thead><tr><th>{{ t.skill }}</th><th>{{ t.description }}</th><th>{{ t.owner }}</th></tr></thead>
+    <tbody>
+      {% for nr in trending.new_releases %}
+      <tr><td>{{ nr.name }}</td><td>{{ nr.description | default('') }}</td><td>{{ nr.owner | default('') }}</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% endif %}
+
+  {% endif %}
+{% endif %}
+
+{# ── All Skills ── #}
+{% if all_skills %}
+<h2>{{ t.all_skills }}</h2>
+<table>
+  <thead><tr><th>{{ t.skill }}</th><th>{{ t.description }}</th><th>{{ t.installs }}</th><th>{{ t.owner }}</th></tr></thead>
+  <tbody>
+    {% for s in all_skills %}
+    <tr>
+      <td>{{ s.name }}</td>
+      <td>{{ s.description | default('') }}</td>
+      <td>{{ s.installs | default(0) }}</td>
+      <td>{{ s.owner | default('') }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endif %}
+
+{# ── All Packages ── #}
+{% if all_packages %}
+<h2>{{ t.all_packages }}</h2>
+<table>
+  <thead><tr><th>{{ t.skill }}</th><th>{{ t.description }}</th><th>{{ t.installs }}</th><th>{{ t.owner }}</th></tr></thead>
+  <tbody>
+    {% for p in all_packages %}
+    <tr>
+      <td>{{ p.name }}</td>
+      <td>{{ p.description | default('') }}</td>
+      <td>{{ p.installs | default(0) }}</td>
+      <td>{{ p.owner | default('') }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endif %}
+
+{# ── Browse by Tag ── #}
+{% if tags %}
+<h2>{{ t.browse_by_tag }}</h2>
+<p>
+  {% for tag_name in tags %}
+  <span class="tag"><a href="tags/{{ tag_name }}/">{{ tag_name }}</a></span>
+  {% endfor %}
+</p>
+{% endif %}
+
+<hr>
+<p class="footer">{{ t.auto_generated }}</p>
+
+<script>
+function copyCode(btn) {
+  var code = btn.parentElement.querySelector('code');
+  navigator.clipboard.writeText(code.textContent).then(function() {
+    btn.textContent = 'Copied!';
+    setTimeout(function() { btn.textContent = 'Copy'; }, 2000);
+  });
+}
+</script>
+
+</body>
+</html>

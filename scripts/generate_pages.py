@@ -142,6 +142,69 @@ def main():
 
     print(f"Generated pages for {count} packages.")
 
+    generate_homepage(index, env)
+    generate_tag_pages(index, env)
+
+
+def generate_homepage(index: dict, env: Environment):
+    """Generate IpHub homepage."""
+    template = env.get_template("index-page.html.j2")
+    trending = index.get("trending", {})
+    tags = index.get("tags", {})
+
+    # Collect all entries for listing
+    all_skills = [{"name": n, **info} for n, info in index.get("skills", {}).items()]
+    all_packages = [{"name": n, **info} for n, info in index.get("packages", {}).items()]
+
+    for lang in LANGUAGES:
+        t = load_i18n(lang)
+        html = template.render(
+            trending=trending, all_skills=all_skills, all_packages=all_packages,
+            tags=tags, t=t, lang=lang,
+        )
+        lang_dir = PAGES / lang
+        lang_dir.mkdir(parents=True, exist_ok=True)
+        (lang_dir / "index.html").write_text(html, encoding="utf-8")
+
+    # Root index.html — English default
+    t = load_i18n("en")
+    html = template.render(
+        trending=trending, all_skills=all_skills, all_packages=all_packages,
+        tags=tags, t=t, lang="en",
+    )
+    (PAGES / "index.html").write_text(html, encoding="utf-8")
+    print("  Generated homepage")
+
+
+def generate_tag_pages(index: dict, env: Environment):
+    """Generate per-tag browse pages."""
+    template = env.get_template("tag-page.html.j2")
+    tags_data = index.get("tags", {})
+
+    for tag_name, tag_info in tags_data.items():
+        # Collect entries for this tag
+        entries = []
+        for section in ("skills", "packages"):
+            for name, info in index.get(section, {}).items():
+                if tag_name in info.get("tags", []):
+                    entries.append({"name": name, "type": info.get("type", section), **info})
+
+        for lang in LANGUAGES:
+            t = load_i18n(lang)
+            html = template.render(tag_name=tag_name, entries=entries, t=t, lang=lang)
+            tag_dir = PAGES / "tags" / tag_name / lang
+            tag_dir.mkdir(parents=True, exist_ok=True)
+            (tag_dir / "index.html").write_text(html, encoding="utf-8")
+
+        # Root for this tag — English default
+        t = load_i18n("en")
+        html = template.render(tag_name=tag_name, entries=entries, t=t, lang="en")
+        tag_root = PAGES / "tags" / tag_name
+        tag_root.mkdir(parents=True, exist_ok=True)
+        (tag_root / "index.html").write_text(html, encoding="utf-8")
+
+    print(f"  Generated {len(tags_data)} tag pages")
+
 
 if __name__ == "__main__":
     main()

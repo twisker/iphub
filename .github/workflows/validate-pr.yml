@@ -80,6 +80,35 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
 
+      - name: Validate tags
+        run: |
+          python3 - << 'SCRIPT'
+          import re
+          import yaml
+          from pathlib import Path
+
+          TAG_PATTERN = re.compile(r'^[a-z0-9][a-z0-9\-]{0,28}[a-z0-9]$')
+          MAX_TAGS = 10
+          errors = []
+
+          for f in Path("registry").rglob("*.yaml"):
+              data = yaml.safe_load(f.read_text()) or {}
+              tags = data.get("tags", [])
+              if not tags:
+                  continue
+              if len(tags) > MAX_TAGS:
+                  errors.append(f"{f}: too many tags ({len(tags)} > {MAX_TAGS})")
+              for tag in tags:
+                  if not TAG_PATTERN.match(tag):
+                      errors.append(f"{f}: invalid tag '{tag}'")
+
+          if errors:
+              for e in errors:
+                  print(f"ERROR: {e}")
+              exit(1)
+          print("All tags valid.")
+          SCRIPT
+
       - name: Merge PR
         run: |
           gh pr merge "${{ github.event.pull_request.number }}" \

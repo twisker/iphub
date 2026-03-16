@@ -177,6 +177,16 @@
 </p>
 {% endif %}
 
+{# ── Active Authors ── #}
+{% if authors %}
+<h2>{{ t.active_authors }}</h2>
+<p>
+  {% for a in authors %}
+  <span class="tag"><a href="{{ a }}/">{{ a }}</a></span>
+  {% endfor %}
+</p>
+{% endif %}
+
 <hr>
 <p class="footer">{{ t.auto_generated }}</p>
 

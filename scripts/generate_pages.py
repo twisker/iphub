@@ -144,6 +144,7 @@ def main():
 
     generate_homepage(index, env)
     generate_tag_pages(index, env)
+    generate_author_pages(index, env)
 
 
 def generate_homepage(index: dict, env: Environment):
@@ -156,11 +157,20 @@ def generate_homepage(index: dict, env: Environment):
     all_skills = [{"name": n, **info} for n, info in index.get("skills", {}).items()]
     all_packages = [{"name": n, **info} for n, info in index.get("packages", {}).items()]
 
+    # Collect unique authors
+    authors = set()
+    for section in ("skills", "packages"):
+        for name, info in index.get(section, {}).items():
+            owner = info.get("owner", "")
+            if owner:
+                authors.add(owner)
+    authors = sorted(authors)
+
     for lang in LANGUAGES:
         t = load_i18n(lang)
         html = template.render(
             trending=trending, all_skills=all_skills, all_packages=all_packages,
-            tags=tags, t=t, lang=lang,
+            tags=tags, authors=authors, t=t, lang=lang,
         )
         lang_dir = PAGES / lang
         lang_dir.mkdir(parents=True, exist_ok=True)
@@ -170,7 +180,7 @@ def generate_homepage(index: dict, env: Environment):
     t = load_i18n("en")
     html = template.render(
         trending=trending, all_skills=all_skills, all_packages=all_packages,
-        tags=tags, t=t, lang="en",
+        tags=tags, authors=authors, t=t, lang="en",
     )
     (PAGES / "index.html").write_text(html, encoding="utf-8")
     print("  Generated homepage")
@@ -204,6 +214,48 @@ def generate_tag_pages(index: dict, env: Environment):
         (tag_root / "index.html").write_text(html, encoding="utf-8")
 
     print(f"  Generated {len(tags_data)} tag pages")
+
+
+def generate_author_pages(index: dict, env: Environment):
+    """Generate per-author profile pages."""
+    template = env.get_template("author-page.html.j2")
+
+    # Aggregate by owner
+    authors = {}
+    for section in ("skills", "packages"):
+        for name, info in index.get(section, {}).items():
+            owner = info.get("owner", "unknown")
+            if owner not in authors:
+                authors[owner] = {"skills": [], "packages": [], "total_installs": 0}
+            entry = {"name": name, **info}
+            if section == "skills":
+                authors[owner]["skills"].append(entry)
+            else:
+                authors[owner]["packages"].append(entry)
+            authors[owner]["total_installs"] += info.get("installs", 0)
+
+    for author, data in authors.items():
+        for lang in LANGUAGES:
+            t = load_i18n(lang)
+            html = template.render(
+                author=author, skills=data["skills"], packages=data["packages"],
+                total_installs=data["total_installs"], t=t, lang=lang,
+            )
+            author_dir = PAGES / author / lang
+            author_dir.mkdir(parents=True, exist_ok=True)
+            (author_dir / "index.html").write_text(html, encoding="utf-8")
+
+        # Root — English default
+        t = load_i18n("en")
+        html = template.render(
+            author=author, skills=data["skills"], packages=data["packages"],
+            total_installs=data["total_installs"], t=t, lang="en",
+        )
+        author_root = PAGES / author
+        author_root.mkdir(parents=True, exist_ok=True)
+        (author_root / "index.html").write_text(html, encoding="utf-8")
+
+    print(f"  Generated {len(authors)} author pages")
 
 
 if __name__ == "__main__":

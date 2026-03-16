@@ -1,0 +1,90 @@
+# {{ pkg.icon + ' ' if pkg.icon }}{{ pkg.name }}
+
+> {{ pkg.description }}
+
+{% if pkg.summary %}
+{{ pkg.summary }}
+{% endif %}
+
+## {{ t.quick_start }}
+
+### {{ t.first_time }}
+
+**1. {{ t.install_agent }}** ({{ t.install_agent_pick }})
+```bash
+# Claude Code
+npm install -g @anthropic-ai/claude-code
+
+# OpenClaw
+npm install -g openclaw
+```
+
+**2. {{ t.install_ipman }}**
+```bash
+pip install ipman-cli
+# {{ t.or_one_line }}
+curl -fsSL https://raw.githubusercontent.com/twisker/ipman/main/scripts/install.sh | bash
+```
+
+**3. {{ t.install_this }}**
+```bash
+ipman install {{ pkg.name }}
+```
+
+> 💡 **{{ t.what_is_ipman }}**
+> {{ t.what_is_ipman_detail }}
+> [{{ t.learn_more }} →](https://twisker.github.io/ipman)
+
+---
+
+{% if skills %}
+## {{ t.skills_included }} ({{ skills | length }})
+
+| {{ t.skill }} | {{ t.description }} | {{ t.installs }} |
+|-------|-------------|----------|
+{% for s in skills %}
+| {{ s.name }} | {{ s.description }} | {{ s.installs }} |
+{% endfor %}
+{% endif %}
+
+{% if pkg.tags %}
+## {{ t.tags }}
+
+{% for tag in pkg.tags %}`{{ tag }}` {% endfor %}
+{% endif %}
+
+{% if versions %}
+## {{ t.version_history }}
+
+{% for v in versions %}
+### v{{ v.version }} ({{ v.released }})
+{% if v.changelog %}
+{{ v.changelog.summary | default('') }}
+{% if v.changelog.added %}
+{% for item in v.changelog.added %}- ✅ {{ t.added }}: {{ item }}
+{% endfor %}{% endif %}
+{% if v.changelog.removed %}
+{% for item in v.changelog.removed %}- ❌ {{ t.removed }}: {{ item }}
+{% endfor %}{% endif %}
+{% if v.changelog.changed %}
+{% for item in v.changelog.changed %}- 🔄 {{ t.changed }}: {{ item }}
+{% endfor %}{% endif %}
+{% endif %}
+
+{% endfor %}
+{% endif %}
+
+{% if pkg.links %}
+## {{ t.links }}
+
+{% for link in pkg.links %}
+- [{{ link.title }}]({{ link.url }})
+{% endfor %}
+{% endif %}
+
+## {{ t.author }}
+
+**{{ pkg.author }}**
+
+---
+*{{ t.auto_generated }} · `ipman install {{ pkg.name }}`*

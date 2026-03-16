@@ -55,6 +55,10 @@ jobs:
                           entry["agents"] = list(data["agents"].keys())
                       if "risk_level" in data:
                           entry["risk_level"] = data["risk_level"]
+                      if "tags" in data:
+                          entry["tags"] = data["tags"]
+                      elif "keywords" in data:
+                          entry["tags"] = data["keywords"]
                       index["skills"][name] = entry
 
                   elif item.is_dir():
@@ -77,6 +81,8 @@ jobs:
                       }
                       if "risk_level" in meta:
                           entry["risk_level"] = meta["risk_level"]
+                      if "tags" in meta:
+                          entry["tags"] = meta["tags"]
                       index["packages"][name] = entry
 
           with open("index.yaml", "w") as f:
@@ -100,6 +106,25 @@ jobs:
             git commit -m "chore: rebuild index.yaml"
             git push
             echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Calculate trending
+        if: steps.commit.outputs.changed == 'true'
+        run: python3 scripts/generate_trending.py
+
+      - name: Sync tag labels
+        if: steps.commit.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python3 scripts/sync_tag_labels.py
+
+      - name: Commit trending updates
+        if: steps.commit.outputs.changed == 'true'
+        run: |
+          git add index.yaml stats/
+          if ! git diff --cached --quiet; then
+            git commit -m "chore: update trending data and snapshots"
+            git push
           fi
 
       - name: Sync to CNB mirror

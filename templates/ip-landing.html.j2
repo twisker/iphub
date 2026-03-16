@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="{{ lang }}">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{ pkg.icon + ' ' if pkg.icon }}{{ pkg.name }} — IpHub</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      line-height: 1.6; color: #24292f; background: #fff; max-width: 800px; margin: 0 auto; padding: 0 1rem 3rem;
+    }
+    .lang-bar {
+      background: #f6f8fa; border-bottom: 1px solid #d0d7de; padding: 0.4rem 1rem;
+      margin: 0 -1rem 1.5rem; font-size: 0.85rem; text-align: right;
+    }
+    .lang-bar a { color: #0969da; text-decoration: none; margin-left: 0.8rem; }
+    .lang-bar a:hover { text-decoration: underline; }
+    .lang-bar .active { font-weight: 600; color: #24292f; text-decoration: none; cursor: default; }
+    h1 { font-size: 2rem; margin: 1rem 0 0.5rem; }
+    h2 { font-size: 1.4rem; margin: 2rem 0 0.8rem; border-bottom: 1px solid #d0d7de; padding-bottom: 0.3rem; }
+    h3 { font-size: 1.1rem; margin: 1.2rem 0 0.5rem; }
+    blockquote {
+      background: #ddf4ff; border-left: 4px solid #54aeff; padding: 0.8rem 1rem; margin: 1rem 0; border-radius: 4px;
+    }
+    blockquote p { margin: 0.2rem 0; }
+    blockquote a { color: #0969da; }
+    pre {
+      background: #f6f8fa; border: 1px solid #d0d7de; border-radius: 6px;
+      padding: 1rem; overflow-x: auto; position: relative; margin: 0.8rem 0;
+    }
+    code { font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace; font-size: 0.9em; }
+    pre code { font-size: 0.85em; }
+    .copy-btn {
+      position: absolute; top: 0.4rem; right: 0.4rem; background: #fff; border: 1px solid #d0d7de;
+      border-radius: 4px; padding: 0.2rem 0.5rem; cursor: pointer; font-size: 0.75rem; color: #57606a;
+    }
+    .copy-btn:hover { background: #f3f4f6; }
+    table { width: 100%; border-collapse: collapse; margin: 0.8rem 0; }
+    th, td { text-align: left; padding: 0.5rem 0.8rem; border: 1px solid #d0d7de; }
+    th { background: #f6f8fa; font-weight: 600; }
+    .tag {
+      display: inline-block; background: #ddf4ff; color: #0550ae; padding: 0.15rem 0.5rem;
+      border-radius: 12px; font-size: 0.8rem; margin: 0.2rem 0.3rem 0.2rem 0;
+    }
+    .desc { color: #57606a; font-size: 1.05rem; margin-bottom: 1rem; }
+    hr { border: none; border-top: 1px solid #d0d7de; margin: 2rem 0; }
+    .footer { color: #8b949e; font-size: 0.85rem; font-style: italic; }
+    ul { padding-left: 1.5rem; }
+    li { margin: 0.3rem 0; }
+    a { color: #0969da; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+
+<div class="lang-bar">
+  {% for olang, olink in other_langs.items() %}
+  <a href="{{ olink }}">{{ olang }}</a>
+  {% endfor %}
+  <span class="active">{{ lang }}</span>
+</div>
+
+<h1>{{ pkg.icon + ' ' if pkg.icon }}{{ pkg.name }}</h1>
+<p class="desc">{{ pkg.description }}</p>
+
+{% if pkg.summary %}
+<p>{{ pkg.summary }}</p>
+{% endif %}
+
+<h2>{{ t.quick_start }}</h2>
+
+<h3>{{ t.first_time }}</h3>
+
+<p><strong>1. {{ t.install_agent }}</strong> ({{ t.install_agent_pick }})</p>
+<pre><code># Claude Code
+npm install -g @anthropic-ai/claude-code
+
+# OpenClaw
+npm install -g openclaw</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+
+<p><strong>2. {{ t.install_ipman }}</strong></p>
+<pre><code>pip install ipman-cli
+# {{ t.or_one_line }}
+curl -fsSL https://raw.githubusercontent.com/twisker/ipman/main/scripts/install.sh | bash</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+
+<p><strong>3. {{ t.install_this }}</strong></p>
+<pre><code>ipman install {{ pkg.name }}</code><button class="copy-btn" onclick="copyCode(this)">Copy</button></pre>
+
+<blockquote>
+  <p>💡 <strong>{{ t.what_is_ipman }}</strong></p>
+  <p>{{ t.what_is_ipman_detail }}</p>
+  <p><a href="https://twisker.github.io/ipman">{{ t.learn_more }} →</a></p>
+</blockquote>
+
+<hr>
+
+{% if skills %}
+<h2>{{ t.skills_included }} ({{ skills | length }})</h2>
+<table>
+  <thead><tr><th>{{ t.skill }}</th><th>{{ t.description }}</th><th>{{ t.installs }}</th></tr></thead>
+  <tbody>
+    {% for s in skills %}
+    <tr><td>{{ s.name }}</td><td>{{ s.description }}</td><td>{{ s.installs }}</td></tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endif %}
+
+{% if pkg.tags %}
+<h2>{{ t.tags }}</h2>
+<p>{% for tag in pkg.tags %}<span class="tag">{{ tag }}</span>{% endfor %}</p>
+{% endif %}
+
+{% if versions %}
+<h2>{{ t.version_history }}</h2>
+{% for v in versions %}
+<h3>v{{ v.version }} ({{ v.released }})</h3>
+{% if v.changelog %}
+<p>{{ v.changelog.summary | default('') }}</p>
+{% if v.changelog.added %}<ul>{% for item in v.changelog.added %}<li>✅ {{ t.added }}: {{ item }}</li>{% endfor %}</ul>{% endif %}
+{% if v.changelog.removed %}<ul>{% for item in v.changelog.removed %}<li>❌ {{ t.removed }}: {{ item }}</li>{% endfor %}</ul>{% endif %}
+{% if v.changelog.changed %}<ul>{% for item in v.changelog.changed %}<li>🔄 {{ t.changed }}: {{ item }}</li>{% endfor %}</ul>{% endif %}
+{% endif %}
+{% endfor %}
+{% endif %}
+
+{% if pkg.links %}
+<h2>{{ t.links }}</h2>
+<ul>
+  {% for link in pkg.links %}
+  <li><a href="{{ link.url }}">{{ link.title }}</a></li>
+  {% endfor %}
+</ul>
+{% endif %}
+
+<h2>{{ t.author }}</h2>
+<p><strong>{{ pkg.author }}</strong></p>
+
+<hr>
+<p class="footer">{{ t.auto_generated }} · <code>ipman install {{ pkg.name }}</code></p>
+
+<script>
+function copyCode(btn) {
+  var code = btn.parentElement.querySelector('code');
+  navigator.clipboard.writeText(code.textContent).then(function() {
+    btn.textContent = 'Copied!';
+    setTimeout(function() { btn.textContent = 'Copy'; }, 2000);
+  });
+}
+</script>
+
+</body>
+</html>

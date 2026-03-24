@@ -148,42 +148,38 @@ def main():
 
 
 def generate_homepage(index: dict, env: Environment):
-    """Generate IpHub homepage."""
-    template = env.get_template("index-page.html.j2")
-    trending = index.get("trending", {})
-    tags = index.get("tags", {})
+    """Generate IpHub homepage from README.md.
 
-    # Collect all entries for listing
-    all_skills = [{"name": n, **info} for n, info in index.get("skills", {}).items()]
-    all_packages = [{"name": n, **info} for n, info in index.get("packages", {}).items()]
+    Renders the repo's README.md as HTML and wraps it in the
+    homepage template for a polished landing page.
+    """
+    import markdown
 
-    # Collect unique authors
-    authors = set()
-    for section in ("skills", "packages"):
-        for name, info in index.get(section, {}).items():
-            owner = info.get("owner", "")
-            if owner:
-                authors.add(owner)
-    authors = sorted(authors)
+    readme_path = ROOT / "README.md"
+    if not readme_path.exists():
+        print("  WARNING: README.md not found, skipping homepage")
+        return
 
-    for lang in LANGUAGES:
-        t = load_i18n(lang)
-        html = template.render(
-            trending=trending, all_skills=all_skills, all_packages=all_packages,
-            tags=tags, authors=authors, t=t, lang=lang,
-        )
-        lang_dir = PAGES / lang
-        lang_dir.mkdir(parents=True, exist_ok=True)
-        (lang_dir / "index.html").write_text(html, encoding="utf-8")
+    readme_md = readme_path.read_text(encoding="utf-8")
 
-    # Root index.html — English default
-    t = load_i18n("en")
-    html = template.render(
-        trending=trending, all_skills=all_skills, all_packages=all_packages,
-        tags=tags, authors=authors, t=t, lang="en",
+    # Strip HTML comments used by update-stats markers
+    # (they render as empty in HTML but look cleaner without)
+    import re
+    readme_md = re.sub(r"<!--.*?-->", "", readme_md, flags=re.DOTALL)
+
+    readme_html = markdown.markdown(
+        readme_md,
+        extensions=["tables", "fenced_code"],
     )
+
+    template = env.get_template("homepage.html.j2")
+
+    # Root index.html
+    t = load_i18n("en")
+    html = template.render(readme_html=readme_html, t=t, lang="en")
     (PAGES / "index.html").write_text(html, encoding="utf-8")
-    print("  Generated homepage")
+
+    print("  Generated homepage from README.md")
 
 
 def generate_tag_pages(index: dict, env: Environment):

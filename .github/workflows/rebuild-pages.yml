@@ -3,7 +3,11 @@ name: Rebuild Pages
 on:
   push:
     branches: [main]
-    paths: ["registry/**"]
+    paths:
+      - "registry/**"
+      - "README.md"
+      - "templates/**"
+      - "scripts/generate_pages.py"
   workflow_dispatch:
 
 permissions:
@@ -20,7 +24,7 @@ jobs:
           python-version: "3.12"
 
       - name: Install dependencies
-        run: pip install jinja2 pyyaml
+        run: pip install jinja2 pyyaml markdown
 
       - name: Generate pages
         run: python3 scripts/generate_pages.py

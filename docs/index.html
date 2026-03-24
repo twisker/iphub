@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IpHub — Agent Skill Registry</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      line-height: 1.6; color: #24292f; background: #fff; max-width: 800px; margin: 0 auto; padding: 0 1rem 3rem;
+    }
+    .lang-bar {
+      background: #f6f8fa; border-bottom: 1px solid #d0d7de; padding: 0.4rem 1rem;
+      margin: 0 -1rem 1.5rem; font-size: 0.85rem; text-align: right;
+    }
+    .lang-bar a { color: #0969da; text-decoration: none; margin-left: 0.8rem; }
+    .lang-bar a:hover { text-decoration: underline; }
+    .lang-bar .active { font-weight: 600; color: #24292f; text-decoration: none; cursor: default; }
+    h1 { font-size: 2rem; margin: 1rem 0 0.5rem; }
+    h2 { font-size: 1.4rem; margin: 2rem 0 0.8rem; border-bottom: 1px solid #d0d7de; padding-bottom: 0.3rem; }
+    h3 { font-size: 1.1rem; margin: 1.2rem 0 0.5rem; }
+    blockquote {
+      background: #ddf4ff; border-left: 4px solid #54aeff; padding: 0.8rem 1rem; margin: 1rem 0; border-radius: 4px;
+    }
+    blockquote p { margin: 0.2rem 0; }
+    blockquote a { color: #0969da; }
+    pre {
+      background: #f6f8fa; border: 1px solid #d0d7de; border-radius: 6px;
+      padding: 1rem; overflow-x: auto; position: relative; margin: 0.8rem 0;
+    }
+    code { font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace; font-size: 0.9em; }
+    pre code { font-size: 0.85em; background: none; padding: 0; }
+    p code { background: #f6f8fa; padding: 0.15rem 0.4rem; border-radius: 3px; }
+    table { width: 100%; border-collapse: collapse; margin: 0.8rem 0; }
+    th, td { text-align: left; padding: 0.5rem 0.8rem; border: 1px solid #d0d7de; }
+    th { background: #f6f8fa; font-weight: 600; }
+    a { color: #0969da; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    hr { border: none; border-top: 1px solid #d0d7de; margin: 2rem 0; }
+    ul, ol { padding-left: 1.5rem; }
+    li { margin: 0.3rem 0; }
+    .footer { color: #8b949e; font-size: 0.85rem; font-style: italic; margin-top: 3rem; }
+    img { max-width: 100%; }
+    .readme-content em { color: #57606a; }
+  </style>
+</head>
+<body>
+
+<div class="lang-bar">
+  
+  <span class="active">en</span>
+  
+</div>
+
+<div class="readme-content">
+<h1>IpHub — IpMan Skill Registry</h1>
+<blockquote>
+<p>Reference registry for <a href="https://github.com/twisker/ipman">IpMan</a> skills and IP packages.</p>
+</blockquote>
+<p>IpHub is a <strong>reference-only registry</strong> — it stores metadata about skills, not the skills themselves. All installations go through agent native CLI commands.</p>
+<h2>Top Skills</h2>
+<h2>Top 10 Skills</h2>
+<p><em>Updated: 2026-03-24T04:21:42Z</em></p>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Name</th>
+<th>Type</th>
+<th>Installs</th>
+<th>Users</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2>Top Packages</h2>
+<h2>Top 10 Packages</h2>
+<p><em>Updated: 2026-03-24T04:21:42Z</em></p>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Name</th>
+<th>Type</th>
+<th>Installs</th>
+<th>Users</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2>Top 50</h2>
+<h2>Top 50</h2>
+<p><em>Updated: 2026-03-24T04:21:42Z</em></p>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Name</th>
+<th>Type</th>
+<th>Installs</th>
+<th>Users</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2>How It Works</h2>
+<ol>
+<li><strong>Publish</strong>: <code>ipman hub publish &lt;skill&gt;</code> creates a PR to this repo</li>
+<li><strong>Install</strong>: <code>ipman install &lt;name&gt;</code> looks up this registry, then calls agent CLI</li>
+<li><strong>Stats</strong>: Install counts tracked via GitHub Issues (counter labels)</li>
+<li><strong>Mirror</strong>: CNB mirror at <code>cnb.cool/lutuai/twisker/iphub</code></li>
+</ol>
+<h2>Structure</h2>
+<pre><code>iphub/
+├── index.yaml              # Auto-generated index (skills + packages)
+├── registry/
+│   └── @&lt;owner&gt;/           # Per-author namespace
+│       ├── &lt;skill&gt;.yaml    # Skill registration
+│       └── &lt;package&gt;/      # IP package (versioned)
+│           ├── meta.yaml
+│           └── &lt;version&gt;.yaml
+└── stats/
+    ├── downloads.yaml      # Raw stats
+    ├── top-10-skills.md    # Embeddable ranking
+    ├── top-10-packages.md
+    └── top-50-all.md
+</code></pre>
+<h2>Links</h2>
+<ul>
+<li><a href="https://github.com/twisker/ipman">IpMan</a> — The CLI tool</li>
+<li><a href="https://twisker.github.io/ipman">Documentation</a></li>
+<li><a href="https://github.com/twisker/ipman/blob/main/.claude/research/iphub-design.md">IpHub Design</a></li>
+</ul>
+</div>
+
+<hr>
+<p class="footer">Auto-generated by IpHub &middot; <a href="https://github.com/twisker/iphub">GitHub</a></p>
+
+</body>
+</html>

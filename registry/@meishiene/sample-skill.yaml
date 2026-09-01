@@ -1,0 +1,5 @@
+type: skill
+name: sample-skill
+description: Sample skill for publish test
+author: '@meishiene'
+risk_level: LOW

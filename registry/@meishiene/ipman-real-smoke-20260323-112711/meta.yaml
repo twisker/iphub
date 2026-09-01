@@ -1,0 +1,6 @@
+type: ip
+name: ipman-real-smoke-20260323-112711
+description: Real smoke test package for ipman hub publish from OpenClaw validation
+  on 2026-03-23. No action required beyond verifying workflow.
+author: '@meishiene'
+risk_level: LOW

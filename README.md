@@ -9,7 +9,7 @@ IpHub is a **reference-only registry** — it stores metadata about skills, not 
 <!-- TOP_SKILLS_START -->
 ## Top 10 Skills
 
-*Updated: 2026-11-15T08:53:29Z*
+*Updated: 2026-11-16T09:06:28Z*
 
 | # | Name | Type | Installs | Users |
 |---|------|------|----------|-------|
@@ -20,7 +20,7 @@ IpHub is a **reference-only registry** — it stores metadata about skills, not 
 <!-- TOP_PACKAGES_START -->
 ## Top 10 Packages
 
-*Updated: 2026-11-15T08:53:29Z*
+*Updated: 2026-11-16T09:06:28Z*
 
 | # | Name | Type | Installs | Users |
 |---|------|------|----------|-------|
@@ -31,7 +31,7 @@ IpHub is a **reference-only registry** — it stores metadata about skills, not 
 <!-- TOP_ALL_START -->
 ## Top 50
 
-*Updated: 2026-11-15T08:53:29Z*
+*Updated: 2026-11-16T09:06:28Z*
 
 | # | Name | Type | Installs | Users |
 |---|------|------|----------|-------|

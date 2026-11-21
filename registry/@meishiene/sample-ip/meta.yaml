@@ -1,0 +1,5 @@
+type: ip
+name: sample-ip
+description: test ip package for publish chain
+author: '@meishiene'
+risk_level: LOW
